@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/servicioFragment">
+    <fragment
+        android:id="@+id/servicioFragment"
+        android:name="com.example.appmedicanmovilver2.view.fragments.ServicioFragment"
+        android:label="fragment_servicio"
+        tools:layout="@layout/fragment_servicio" />
+    <fragment
+        android:id="@+id/historialFragment"
+        android:name="com.example.appmedicanmovilver2.view.fragments.HistorialFragment"
+        android:label="fragment_historial"
+        tools:layout="@layout/fragment_historial" />
+    <fragment
+        android:id="@+id/mascotasFragment"
+        android:name="com.example.appmedicanmovilver2.view.fragments.MascotasFragment"
+        android:label="fragment_mascotas"
+        tools:layout="@layout/fragment_mascotas" />
+    <fragment
+        android:id="@+id/medicosFragment"
+        android:name="com.example.appmedicanmovilver2.view.fragments.MedicosFragment"
+        android:label="fragment_medicos"
+        tools:layout="@layout/fragment_medicos" />
+    <fragment
+        android:id="@+id/perfilFragment"
+        android:name="com.example.appmedicanmovilver2.view.fragments.PerfilFragment"
+        android:label="fragment_perfil"
+        tools:layout="@layout/fragment_perfil" />
+    <fragment
+        android:id="@+id/reservaFragment"
+        android:name="com.example.appmedicanmovilver2.view.fragments.ReservaFragment"
+        android:label="fragment_reserva"
+        tools:layout="@layout/fragment_reserva" />
+</navigation>

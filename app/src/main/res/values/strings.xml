@@ -1,0 +1,42 @@
+<resources>
+    <string name="app_name">AppMedicanMovilVer2</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="valuser">EMAIL</string>
+    <string name="valPass">CONTRASEÑA</string>
+    <string name="valLoge">INGRESAR</string>
+    <string name="valReg">REGISTRARTE</string>
+    <string name="valRegistrarse">REGISTRO</string>
+    <string name="valNomb">INGRESA TU NOMBRE</string>
+    <string name="valApellid">INGRESA TUS APELLIDOS</string>
+    <string name="valDNI">INGRESA TU DNI</string>
+    <string name="valnum">INGRESA TU NUMERO</string>
+    <string name="valDirec">INGRESA TU DIRECCION</string>
+    <string name="valCorreo">INGRESA TU EMAIL</string>
+    <string name="valContrasena">INGRESA TU CONTRASEÑA</string>
+    <string name="valbtnReg">REGISTRATE</string>
+    <string name="valTitCitas">CONSULTAS</string>
+    <string name="valModifica">MODIFICAR</string>
+    <string name="valReservar">RESERVA</string>
+    <string name="valBtnRes">RESERVAR</string>
+    <string name="valServ">SERVICIOS</string>
+    <string name="valmedic">MEDICOS</string>
+    <string name="valPerfil">TU PERFIL</string>
+    <string name="valHisto">TUS CONSULTAS</string>
+    <string name="valMasc">TUS MASCOTAS</string>
+    <string name="valReser">RESERVAR</string>
+    <string name="valtitMedic">MEDICOS</string>
+    <string name="valTitMascota">MASCOTA</string>
+    <string name="valtitServicios">SERVICIOS</string>
+</resources>

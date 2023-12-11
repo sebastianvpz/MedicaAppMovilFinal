@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/servicioFragment"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="@string/valServ" />
+        <item
+            android:id="@+id/medicosFragment"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="@string/valmedic" />
+        <item
+            android:id="@+id/perfilFragment"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/valPerfil" />
+        <item
+            android:id="@+id/historialFragment"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/valHisto" />
+        <item
+            android:id="@+id/mascotasFragment"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/valMasc" />
+        <item
+            android:id="@+id/reservaFragment"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/valReser" />
+    </group>
+</menu>
