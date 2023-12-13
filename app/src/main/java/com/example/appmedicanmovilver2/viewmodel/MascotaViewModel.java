@@ -16,6 +16,7 @@ import retrofit2.Response;
 public class MascotaViewModel extends AndroidViewModel {
 
     private MutableLiveData<List<MascotaResponse>> mascotasLiveData = new MutableLiveData<>();
+
     private MascotaClient mascotaClient;
 
     public MascotaViewModel(@NonNull Application application) {

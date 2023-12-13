@@ -24,6 +24,12 @@ public class UsuarioRepository {
         new registrarAsyncTask(usuarioDao).execute(usuario);
     }
 
+    public Usuario obtenerUsuarioSync() {
+        return usuarioDao.obtenerUsuarioSync();
+    }
+
+
+
 
     private static class registrarAsyncTask
             extends AsyncTask<Usuario, Void, Void> {

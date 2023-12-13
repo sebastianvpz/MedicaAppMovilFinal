@@ -21,6 +21,9 @@ public interface UsuarioDao {
     @Query("SELECT * FROM usuario LIMIT 1")
     LiveData<Usuario> obtener();
 
+    @Query("SELECT * FROM usuario LIMIT 1")
+    Usuario obtenerUsuarioSync();
+
 
 
 

@@ -40,4 +40,12 @@
     <string name="valTitMascota">MASCOTA</string>
     <string name="valtitServicios">SERVICIOS</string>
     <string name="valtitCerrarSesion">CERRAR SESION</string>
+    <string name="valAgmascota">AGREGAR MASCOTA</string>
+    <string name="valAgregar">AGREGAR</string>
+    <string name="valEspec">ESPECIE:</string>
+    <string name="valSexo">SEXO</string>
+    <string name="valNomMas">Nombre</string>
+    <string name="valEdadMasc">EDAD</string>
+    <string name="valMascho">MACHO</string>
+    <string name="valHemb">HEMBRA</string>
 </resources>

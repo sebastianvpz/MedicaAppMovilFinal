@@ -39,6 +39,11 @@ public class UsuarioViewModel extends AndroidViewModel {
         return usuarioRepository.obtenerUsuario();
     }
 
+    public Long obtenerIdUsuario() {
+        Usuario usuario = usuarioRepository.obtenerUsuarioSync(); // Método sincrónico para obtener el usuario
+        return usuario != null ? usuario.getIdUsuario() : null;
+    }
+
     public void insertarUsuario(Usuario usuario){
         usuarioRepository.registrarUsuario(usuario);
     }

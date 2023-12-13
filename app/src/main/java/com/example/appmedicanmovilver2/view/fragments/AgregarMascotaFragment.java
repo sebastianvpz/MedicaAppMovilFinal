@@ -3,64 +3,142 @@ package com.example.appmedicanmovilver2.view.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 
 import com.example.appmedicanmovilver2.R;
+import com.example.appmedicanmovilver2.bd.entity.Usuario;
+import com.example.appmedicanmovilver2.databinding.FragmentAgregarMascotaBinding;
+import com.example.appmedicanmovilver2.retrofit.UsuarioClient;
+import com.example.appmedicanmovilver2.retrofit.request.MascotaRequest;
+import com.example.appmedicanmovilver2.retrofit.request.UsuarioRequest;
+import com.example.appmedicanmovilver2.viewmodel.AgregarMascotaViewModel;
+import com.example.appmedicanmovilver2.viewmodel.UsuarioViewModel;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link AgregarMascotaFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class AgregarMascotaFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+public class AgregarMascotaFragment extends Fragment implements AdapterView.OnItemSelectedListener, View.OnClickListener{
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private FragmentAgregarMascotaBinding binding;
 
-    public AgregarMascotaFragment() {
-        // Required empty public constructor
-    }
+    private String especie ="";
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment AgregarMascotaFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static AgregarMascotaFragment newInstance(String param1, String param2) {
-        AgregarMascotaFragment fragment = new AgregarMascotaFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+    private AgregarMascotaViewModel agregarMascotaViewModel;
+    private UsuarioViewModel usuarioViewModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+
+        binding = FragmentAgregarMascotaBinding.inflate(inflater,container,
+                false);
+
+        ArrayAdapter<CharSequence> adapterSpinner =
+                ArrayAdapter.createFromResource(
+                        requireActivity(),
+                        R.array.especies,
+                        android.R.layout.simple_spinner_item
+                );
+
+
+        agregarMascotaViewModel = new ViewModelProvider(requireActivity())
+                .get(AgregarMascotaViewModel.class);
+        usuarioViewModel = new ViewModelProvider(requireActivity())
+                .get(UsuarioViewModel.class);
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_agregar_mascota, container, false);
+        binding.spnEspecie.setAdapter(adapterSpinner);
+        binding.spnEspecie.setOnItemSelectedListener(this);
+        binding.btnAgregarMascota.setOnClickListener(this);
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.btnAgregarMascota) {
+            agregarMascota();
+        }
+
+
+    }
+
+    private void agregarMascota() {
+
+        usuarioViewModel.obtenerUsuario().observe(getViewLifecycleOwner(), usuario -> {
+            if (usuario != null) {
+                Long idUsuario = usuario.getIdUsuario();
+                Log.d("AgregarMascota", "ID del Usuario: " + idUsuario);
+
+                String nombre = binding.txtNomMascota.getText().toString();
+                int edad = Integer.parseInt(binding.txtEdadMascot.getText().toString());
+
+
+                Log.d("AgregarMascota", "Nombre: " + nombre);
+                Log.d("AgregarMascota", "Edad: " + edad);
+
+                // Crea un objeto MascotaRequest con los datos
+                UsuarioRequest usuarioRequest = new UsuarioRequest(idUsuario);
+                MascotaRequest mascotaRequest = new MascotaRequest();
+                mascotaRequest.setNombre(nombre);
+                mascotaRequest.setEspecie(especie);
+                mascotaRequest.setEdad(edad);
+                mascotaRequest.setSexo(obtenerSexo());
+                mascotaRequest.setUsuario( usuarioRequest);
+
+                Log.d("AgregarMascota", "MascotaRequest: " + mascotaRequest.toString());
+
+                // Llama al método del ViewModel para agregar la mascota
+                agregarMascotaViewModel.agregarMascota(mascotaRequest);
+
+                // Observa el resultado y toma las acciones necesarias
+                agregarMascotaViewModel.getMascotaAgregada().observe(getViewLifecycleOwner(), mascotaAgregada -> {
+                    if (mascotaAgregada) {
+                        Log.d("AgregarMascotaFragment", "Mascota Agregada: ");
+                    }
+                });
+
+                agregarMascotaViewModel.getMensajeError().observe(getViewLifecycleOwner(), mensajeError -> {
+                    Log.d("AgregarMascotaFragment", "Mascota No Agregada " + mensajeError);
+                });
+            }
+        });
+    }
+
+
+    private String obtenerSexo() {
+        String sexo = "";
+
+        if (binding.rgSexo.getCheckedRadioButtonId() == R.id.rbMacho) {
+            sexo = binding.rbMacho.getText().toString();
+        }else {
+            sexo = binding.rbHembra.getText().toString();
+        }
+        return  sexo;
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int i, long id) {
+
+        if (i == 0) {
+            especie = "";
+        }else {
+            especie = parent.getItemAtPosition(i).toString();
+        }
+        Log.d("AgregarMascota", "Especie seleccionada: " + especie);
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+
+
     }
 }

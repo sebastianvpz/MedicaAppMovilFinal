@@ -34,4 +34,9 @@
         android:name="com.example.appmedicanmovilver2.view.fragments.ReservaFragment"
         android:label="fragment_reserva"
         tools:layout="@layout/fragment_reserva" />
+    <fragment
+        android:id="@+id/agregarMascotaFragment"
+        android:name="com.example.appmedicanmovilver2.view.fragments.AgregarMascotaFragment"
+        android:label="fragment_agregar_mascota"
+        tools:layout="@layout/fragment_agregar_mascota" />
 </navigation>
