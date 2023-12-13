@@ -45,6 +45,7 @@ public class ServiciosAdapter extends RecyclerView.Adapter<ServiciosAdapter.View
     }
 
     public void setServicios(List<ServiciosResponse> servicios){
+        serviciosResponseList.clear();
         serviciosResponseList.addAll(servicios);
         notifyDataSetChanged();
 

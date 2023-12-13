@@ -39,4 +39,5 @@
     <string name="valtitMedic">MEDICOS</string>
     <string name="valTitMascota">MASCOTA</string>
     <string name="valtitServicios">SERVICIOS</string>
+    <string name="valtitCerrarSesion">CERRAR SESION</string>
 </resources>

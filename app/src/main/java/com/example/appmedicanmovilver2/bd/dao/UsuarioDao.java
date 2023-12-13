@@ -21,8 +21,7 @@ public interface UsuarioDao {
     @Query("SELECT * FROM usuario LIMIT 1")
     LiveData<Usuario> obtener();
 
-    @Query("SELECT * FROM usuario WHERE idUsuario = :userId")
-    LiveData<Usuario> obtenerPorId(Long userId);
+
 
 
 }

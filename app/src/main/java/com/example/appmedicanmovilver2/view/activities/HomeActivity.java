@@ -1,13 +1,21 @@
 package com.example.appmedicanmovilver2.view.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
+import android.widget.TextView;
 
 import com.example.appmedicanmovilver2.R;
+import com.example.appmedicanmovilver2.bd.entity.Usuario;
+import com.example.appmedicanmovilver2.viewmodel.UsuarioViewModel;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -22,12 +30,17 @@ public class HomeActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityHomeBinding binding;
 
+    private UsuarioViewModel usuarioViewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         binding = ActivityHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        usuarioViewModel = new ViewModelProvider(this).get(
+                UsuarioViewModel.class
+        );
 
         setSupportActionBar(binding.appBarHome.toolbar);
         binding.appBarHome.fab.setOnClickListener(new View.OnClickListener() {
@@ -48,6 +61,7 @@ public class HomeActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_home);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+        mostrarInformacionDelUsuario();
     }
 
     @Override
@@ -62,5 +76,43 @@ public class HomeActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_home);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+
+    private void mostrarInformacionDelUsuario(){
+        TextView tvnomusuario = binding.navView.getHeaderView(0)
+                .findViewById(R.id.tvNombMenu);
+        TextView tvemailusuario = binding.navView.getHeaderView(0)
+                .findViewById(R.id.tvEmailMenu);
+        usuarioViewModel.obtenerUsuario().observe(this,
+                new Observer<Usuario>() {
+                    @Override
+                    public void onChanged(Usuario usuario) {
+                        if (usuario != null) {
+                            tvnomusuario.setText(usuario.getNombre()+
+                                    " "+usuario.getApellido());
+                            tvemailusuario.setText(usuario.getEmail());
+                            // Resto del código...
+                        } else {
+                            // Manejar el caso en el que usuario es null
+                        }
+                    }
+                }
+        );
+    }
+
+
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.action_logout){
+            usuarioViewModel.eliminarUsuario();
+            startActivity(new Intent(
+                    getApplicationContext(),
+                    MainActivity.class
+            ));
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

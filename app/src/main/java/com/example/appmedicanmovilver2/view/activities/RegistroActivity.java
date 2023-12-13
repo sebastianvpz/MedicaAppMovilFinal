@@ -9,11 +9,13 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.appmedicanmovilver2.R;
+import com.example.appmedicanmovilver2.bd.entity.Usuario;
 import com.example.appmedicanmovilver2.databinding.ActivityRegistroBinding;
 import com.example.appmedicanmovilver2.retrofit.request.RegistroRequest;
 import com.example.appmedicanmovilver2.retrofit.response.RegistroResponse;
 import com.example.appmedicanmovilver2.viewmodel.AuthViewModel;
 import com.example.appmedicanmovilver2.viewmodel.RegistroViewModel;
+import com.example.appmedicanmovilver2.viewmodel.UsuarioViewModel;
 import com.google.android.material.snackbar.Snackbar;
 
 public class RegistroActivity extends AppCompatActivity implements View.OnClickListener {
@@ -21,6 +23,7 @@ public class RegistroActivity extends AppCompatActivity implements View.OnClickL
     private ActivityRegistroBinding binding;
 
     private RegistroViewModel registroViewModel;
+    private UsuarioViewModel usuarioViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +32,8 @@ public class RegistroActivity extends AppCompatActivity implements View.OnClickL
         setContentView(binding.getRoot());
         registroViewModel = new ViewModelProvider(this)
                 .get(RegistroViewModel.class);
+        usuarioViewModel = new ViewModelProvider(this)
+                .get(UsuarioViewModel.class);
         setContentView(binding.getRoot());
         binding.btnRegistrar.setOnClickListener(this);
         registroViewModel.registroResponseMutableLiveData
@@ -67,6 +72,16 @@ public class RegistroActivity extends AppCompatActivity implements View.OnClickL
         if(registroResponse != null){
             startActivity(new Intent(RegistroActivity.this,
                     HomeActivity.class));
+            Usuario nuevoUsuario = new Usuario();
+            nuevoUsuario.setIdUsuario(registroResponse.getIdUsuario());
+            nuevoUsuario.setNombre(registroResponse.getNombre());
+            nuevoUsuario.setApellido(registroResponse.getApellido());
+            nuevoUsuario.setCelular(registroResponse.getCelular());
+            nuevoUsuario.setDni(registroResponse.getDni());
+            nuevoUsuario.setDireccion(registroResponse.getDireccion());
+            nuevoUsuario.setEmail(registroResponse.getEmail());
+            nuevoUsuario.setContrasena(registroResponse.getContrasena());
+            usuarioViewModel.insertarUsuario(nuevoUsuario);
 
         }else{
             Snackbar.make(binding.getRoot(), "Acceso Denegado",

@@ -46,6 +46,7 @@ public class MedicosAdapter extends RecyclerView.Adapter<MedicosAdapter.ViewHold
     }
 
     public void setMedicos(List<MedicosResponse> medicos){
+        medicosResponseList.clear();
         medicosResponseList.addAll(medicos);
         notifyDataSetChanged();
 
