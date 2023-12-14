@@ -3,64 +3,85 @@ package com.example.appmedicanmovilver2.view.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.appmedicanmovilver2.R;
+import com.example.appmedicanmovilver2.bd.entity.Usuario;
+import com.example.appmedicanmovilver2.databinding.FragmentHistorialBinding;
+import com.example.appmedicanmovilver2.retrofit.response.ConsultaResponse;
+import com.example.appmedicanmovilver2.view.adapters.ConsultasAdapter;
+import com.example.appmedicanmovilver2.viewmodel.ConsultaViewModel;
+import com.example.appmedicanmovilver2.viewmodel.UsuarioViewModel;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link HistorialFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.List;
+
+
 public class HistorialFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private FragmentHistorialBinding binding;
+    private ConsultaViewModel consultaViewModel;
+    private ConsultasAdapter consultasAdapter = new ConsultasAdapter();
+    private UsuarioViewModel usuarioViewModel;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private Long idUser;
 
-    public HistorialFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment HistorialFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static HistorialFragment newInstance(String param1, String param2) {
-        HistorialFragment fragment = new HistorialFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        binding = FragmentHistorialBinding.inflate(inflater,
+            container,false);
+        consultaViewModel = new ViewModelProvider(requireActivity())
+                 .get(ConsultaViewModel.class);
+        usuarioViewModel = new ViewModelProvider(requireActivity())
+               .get(UsuarioViewModel.class);
+        binding.rvConsultas.setLayoutManager(
+                new LinearLayoutManager(requireActivity())
+        );
+        binding.rvConsultas.setAdapter(consultasAdapter);
+
+        usuarioViewModel.obtenerUsuario().observe(getViewLifecycleOwner(), new Observer<Usuario>() {
+            @Override
+            public void onChanged(Usuario usuario) {
+                if (usuario != null) {
+                    Long idUsuario = usuario.getIdUsuario();
+                    consultaViewModel.getConsultasByUsuario(idUsuario);
+                    Log.d("TuFragmento", "ID del usuario: " + idUsuario);
+
+                    // Observar las consultas asociadas al usuario
+                    consultaViewModel.getConsultasByUsuario(idUsuario).observe(getViewLifecycleOwner(), new Observer<List<ConsultaResponse>>() {
+                        @Override
+                        public void onChanged(List<ConsultaResponse> consultas) {
+                            if (consultas != null) {
+                                // Datos obtenidos con éxito
+                                consultasAdapter.setConsultas(consultas);
+                                consultasAdapter.notifyDataSetChanged();
+                                // Ocultar el indicador de carga si lo tienes
+                            } else {
+                                // Manejar error o datos nulos
+                                // Por ejemplo, mostrar un mensaje de error en la interfaz de usuario
+                                // Ocultar el indicador de carga si lo tienes
+                            }
+                        }
+                    });
+
+                } else {
+                    Log.e("TuFragmento", "El usuario es nulo");
+                }
+            }
+        });
+
+
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_historial, container, false);
+        return binding.getRoot();
     }
 }
