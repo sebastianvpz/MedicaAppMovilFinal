@@ -4,6 +4,7 @@ import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.appmedicanmovilver2.retrofit.ServiciosClient;
@@ -21,6 +22,10 @@ public class ServiciosViewModel extends AndroidViewModel {
             = new MutableLiveData<>();
     public ServiciosViewModel(@NonNull Application application) {
         super(application);
+    }
+
+    public LiveData<List<ServiciosResponse>> getListaServicios() {
+        return listMutableLiveData;
     }
 
     public void listarServicios(){

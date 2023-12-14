@@ -13,12 +13,22 @@ public class CitaRequest {
     @SerializedName("servicio")
     private ServicioRequest servicio;
 
-    public CitaRequest(String fechaHora, MedicoRequest medico, ServicioRequest servicio) {
+    private UsuarioRequest usuario;
+
+    public CitaRequest(String fechaHora, MedicoRequest medico, ServicioRequest servicio, UsuarioRequest usuario) {
         this.fechaHora = fechaHora;
         this.medico = medico;
         this.servicio = servicio;
+        this.usuario = usuario;
     }
 
+    public UsuarioRequest getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(UsuarioRequest usuario) {
+        this.usuario = usuario;
+    }
 
     public String getFechaHora() {
         return fechaHora;

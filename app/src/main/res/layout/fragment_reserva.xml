@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
-        android:id="@+id/spinner"
+        android:id="@+id/spnMedico"
         android:layout_width="409dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -27,33 +27,23 @@
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
     <Spinner
-        android:id="@+id/spinner2"
+        android:id="@+id/spnServicio"
         android:layout_width="409dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner" />
-
-    <Spinner
-        android:id="@+id/spinner3"
-        android:layout_width="409dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:minHeight="48dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner2" />
+        app:layout_constraintTop_toBottomOf="@+id/spnMedico" />
 
     <CalendarView
-        android:id="@+id/calendarView2"
+        android:id="@+id/calVFecha"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner3" />
+        app:layout_constraintTop_toBottomOf="@+id/spnServicio" />
 
     <Button
         android:id="@+id/btnReservar"
@@ -63,5 +53,5 @@
         android:text="@string/valBtnRes"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/calendarView2" />
+        app:layout_constraintTop_toBottomOf="@+id/calVFecha" />
 </androidx.constraintlayout.widget.ConstraintLayout>
