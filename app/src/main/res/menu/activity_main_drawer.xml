@@ -6,27 +6,27 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/servicioFragment"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/baseline_room_service_24"
             android:title="@string/valServ" />
         <item
             android:id="@+id/medicosFragment"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/baseline_medical_services_24"
             android:title="@string/valmedic" />
         <item
             android:id="@+id/perfilFragment"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/baseline_person_24"
             android:title="@string/valPerfil" />
         <item
             android:id="@+id/historialFragment"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/baseline_view_list_24"
             android:title="@string/valHisto" />
         <item
             android:id="@+id/mascotasFragment"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/baseline_pets_24"
             android:title="@string/valMasc" />
         <item
             android:id="@+id/reservaFragment"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/baseline_bookmark_added_24"
             android:title="@string/valReser" />
     </group>
 </menu>
