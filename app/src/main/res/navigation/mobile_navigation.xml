@@ -7,36 +7,36 @@
     <fragment
         android:id="@+id/servicioFragment"
         android:name="com.example.appmedicanmovilver2.view.fragments.ServicioFragment"
-        android:label="fragment_servicio"
+        android:label="@string/valFragServ"
         tools:layout="@layout/fragment_servicio" />
     <fragment
         android:id="@+id/historialFragment"
         android:name="com.example.appmedicanmovilver2.view.fragments.HistorialFragment"
-        android:label="fragment_historial"
+        android:label="@string/valTitConsul"
         tools:layout="@layout/fragment_historial" />
     <fragment
         android:id="@+id/mascotasFragment"
         android:name="com.example.appmedicanmovilver2.view.fragments.MascotasFragment"
-        android:label="fragment_mascotas"
+        android:label="@string/valTitMascoFrag"
         tools:layout="@layout/fragment_mascotas" />
     <fragment
         android:id="@+id/medicosFragment"
         android:name="com.example.appmedicanmovilver2.view.fragments.MedicosFragment"
-        android:label="fragment_medicos"
+        android:label="@string/VALMEDFRAG"
         tools:layout="@layout/fragment_medicos" />
     <fragment
         android:id="@+id/perfilFragment"
         android:name="com.example.appmedicanmovilver2.view.fragments.PerfilFragment"
-        android:label="fragment_perfil"
+        android:label="@string/valTitPerf"
         tools:layout="@layout/fragment_perfil" />
     <fragment
         android:id="@+id/reservaFragment"
         android:name="com.example.appmedicanmovilver2.view.fragments.ReservaFragment"
-        android:label="fragment_reserva"
+        android:label="@string/valTitResreFrag"
         tools:layout="@layout/fragment_reserva" />
     <fragment
         android:id="@+id/agregarMascotaFragment"
         android:name="com.example.appmedicanmovilver2.view.fragments.AgregarMascotaFragment"
-        android:label="fragment_agregar_mascota"
+        android:label="@string/valAgMascFrag"
         tools:layout="@layout/fragment_agregar_mascota" />
 </navigation>

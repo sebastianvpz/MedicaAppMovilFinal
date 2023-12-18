@@ -50,7 +50,9 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.btnIngresar){
-            invocarLogin();
+            if (validarCampos()) {
+                invocarLogin();
+            }
         }else {
             startActivity(
                     new Intent(MainActivity.this,
@@ -58,6 +60,19 @@ public class MainActivity extends AppCompatActivity
             );
         }
 
+    }
+
+    private boolean validarCampos() {
+        if (binding.txtEmail.getText().toString().isEmpty() ||
+                binding.txtPassword.getText().toString().isEmpty()) {
+
+            Snackbar.make(binding.getRoot(), "Por favor, complete todos los campos",
+                    Snackbar.LENGTH_LONG).show();
+            return false;
+        }
+
+
+        return true;
     }
 
 

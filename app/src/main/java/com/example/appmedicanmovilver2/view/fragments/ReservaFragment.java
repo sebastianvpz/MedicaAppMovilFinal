@@ -24,6 +24,7 @@ import com.example.appmedicanmovilver2.retrofit.response.ServiciosResponse;
 import com.example.appmedicanmovilver2.viewmodel.CitaViewModel;
 import com.example.appmedicanmovilver2.viewmodel.MedicosViewModel;
 import com.example.appmedicanmovilver2.viewmodel.ServiciosViewModel;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -90,14 +91,15 @@ public class ReservaFragment extends Fragment implements AdapterView.OnItemSelec
     public void onClick(View v) {
 
         if (v.getId() == R.id.btnReservar) {
-            // Obtiene los datos seleccionados
-            ServiciosResponse servicioSeleccionado = (ServiciosResponse) binding.spnServicio.getSelectedItem();
-            MedicosResponse medicoSeleccionado = (MedicosResponse) binding.spnMedico.getSelectedItem();
-            String fechaHoraFormateada = fechaSeleccionada + "T" + obtenerHoraActual(); // Aquí debes obtener la hora actual
+            if (validarCampos()) {
+                ServiciosResponse servicioSeleccionado = (ServiciosResponse) binding.spnServicio.getSelectedItem();
+                MedicosResponse medicoSeleccionado = (MedicosResponse) binding.spnMedico.getSelectedItem();
+                String fechaHoraFormateada = fechaSeleccionada + "T" + obtenerHoraActual(); // Aquí debes obtener la hora actual
 
+                citaViewModel.createCita(fechaHoraFormateada, medicoSeleccionado.getIdMedico(), servicioSeleccionado.getIdServicio());
+                Snackbar.make(binding.getRoot(), "Reserva realizada con éxito", Snackbar.LENGTH_LONG).show();
 
-            // Realiza la reserva con los datos seleccionados
-            citaViewModel.createCita(fechaHoraFormateada, medicoSeleccionado.getIdMedico(), servicioSeleccionado.getIdServicio());
+            }
         }
 
     }
@@ -122,6 +124,31 @@ public class ReservaFragment extends Fragment implements AdapterView.OnItemSelec
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
+
+    private boolean validarCampos() {
+        if (fechaSeleccionada == null || fechaSeleccionada.isEmpty()) {
+            mostrarMensaje("Por favor, seleccione una fecha para la reserva");
+            return false;
+        }
+
+        if (binding.spnServicio.getSelectedItem() == null) {
+            mostrarMensaje("Por favor, seleccione un servicio");
+            return false;
+        }
+
+        if (binding.spnMedico.getSelectedItem() == null) {
+            mostrarMensaje("Por favor, seleccione un médico");
+            return false;
+        }
+
+        return true;
+    }
+
+    private void mostrarMensaje(String mensaje) {
+        Snackbar.make(binding.getRoot(), mensaje, Snackbar.LENGTH_LONG).show();
+    }
+
+
 
     // Adaptador personalizado para mostrar solo el nombre del médico
     private class MedicoAdapter extends ArrayAdapter<MedicosResponse> {

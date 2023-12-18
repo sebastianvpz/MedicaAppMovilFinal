@@ -22,6 +22,7 @@ import com.example.appmedicanmovilver2.retrofit.request.MascotaRequest;
 import com.example.appmedicanmovilver2.retrofit.request.UsuarioRequest;
 import com.example.appmedicanmovilver2.viewmodel.AgregarMascotaViewModel;
 import com.example.appmedicanmovilver2.viewmodel.UsuarioViewModel;
+import com.google.android.material.snackbar.Snackbar;
 
 
 public class AgregarMascotaFragment extends Fragment implements AdapterView.OnItemSelectedListener, View.OnClickListener{
@@ -63,7 +64,9 @@ public class AgregarMascotaFragment extends Fragment implements AdapterView.OnIt
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.btnAgregarMascota) {
-            agregarMascota();
+            if (validarCampos()) {
+                agregarMascota();
+            }
         }
 
 
@@ -101,6 +104,8 @@ public class AgregarMascotaFragment extends Fragment implements AdapterView.OnIt
                 agregarMascotaViewModel.getMascotaAgregada().observe(getViewLifecycleOwner(), mascotaAgregada -> {
                     if (mascotaAgregada) {
                         Log.d("AgregarMascotaFragment", "Mascota Agregada: ");
+                        Snackbar.make(binding.getRoot(), "Mascota agregada con éxito", Snackbar.LENGTH_LONG).show();
+
                     }
                 });
 
@@ -110,6 +115,40 @@ public class AgregarMascotaFragment extends Fragment implements AdapterView.OnIt
             }
         });
     }
+
+    private boolean validarCampos() {
+        String nombre = binding.txtNomMascota.getText().toString();
+        String edadStr = binding.txtEdadMascot.getText().toString();
+
+        if (nombre.isEmpty()) {
+            mostrarMensaje("Por favor, ingrese el nombre de la mascota");
+            return false;
+        }
+
+        if (edadStr.isEmpty()) {
+            mostrarMensaje("Por favor, ingrese la edad de la mascota");
+            return false;
+        }
+
+        int edad = Integer.parseInt(edadStr);
+
+        if (edad <= 0) {
+            mostrarMensaje("La edad de la mascota debe ser mayor que 0");
+            return false;
+        }
+
+        if (especie.isEmpty()) {
+            mostrarMensaje("Por favor, seleccione la especie de la mascota");
+            return false;
+        }
+
+        return true;
+    }
+
+    private void mostrarMensaje(String mensaje) {
+        Snackbar.make(binding.getRoot(), mensaje, Snackbar.LENGTH_LONG).show();
+    }
+
 
 
     private String obtenerSexo() {

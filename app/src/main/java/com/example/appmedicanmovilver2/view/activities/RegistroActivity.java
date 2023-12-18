@@ -49,7 +49,9 @@ public class RegistroActivity extends AppCompatActivity implements View.OnClickL
     public void onClick(View v) {
 
         if (v.getId() == R.id.btnRegistrar){
-            invocarRegistro();
+            if (validarCampos()) {
+                invocarRegistro();
+            }
         }
 
     }
@@ -65,6 +67,24 @@ public class RegistroActivity extends AppCompatActivity implements View.OnClickL
         registroRequest.setContrasena(binding.txtRegPassword.getText().toString());
 
         registroViewModel.registroUsuario(registroRequest);
+    }
+
+    private boolean validarCampos() {
+        if (binding.txtName.getText().toString().isEmpty() ||
+                binding.txtLastName.getText().toString().isEmpty() ||
+                binding.txtNumero.getText().toString().isEmpty() ||
+                binding.txtDireccion.getText().toString().isEmpty() ||
+                binding.txtDNI.getText().toString().isEmpty() ||
+                binding.txtCorreo.getText().toString().isEmpty() ||
+                binding.txtRegPassword.getText().toString().isEmpty()) {
+
+            Snackbar.make(binding.getRoot(), "Por favor, complete todos los campos",
+                    Snackbar.LENGTH_LONG).show();
+            return false;
+        }
+
+
+        return true;
     }
 
     public void validarRegistro(RegistroResponse registroResponse){

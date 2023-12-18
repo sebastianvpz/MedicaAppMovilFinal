@@ -17,6 +17,7 @@ import com.example.appmedicanmovilver2.bd.entity.Usuario;
 import com.example.appmedicanmovilver2.databinding.FragmentPerfilBinding;
 import com.example.appmedicanmovilver2.repository.UsuarioRepository;
 import com.example.appmedicanmovilver2.viewmodel.UsuarioViewModel;
+import com.google.android.material.snackbar.Snackbar;
 
 
 public class PerfilFragment extends Fragment implements View.OnClickListener{
@@ -84,16 +85,29 @@ public class PerfilFragment extends Fragment implements View.OnClickListener{
         Log.d("PerfilFragment", "invocarActualizar() llamado");
         Log.d("PerfilFragment", "ViewModel hash: " + System.identityHashCode(usuarioViewModel));
 
+        String nuevoNombre = binding.tvNamePer.getText().toString().trim();
+        String nuevoApellido = binding.tvApellidoPer.getText().toString().trim();
+        String nuevoCelularStr = binding.tvCelularPerf.getText().toString().trim();
+        String nuevoDniStr = binding.tvDniPerf.getText().toString().trim();
+        String nuevaDireccion = binding.tvDireccionPerf.getText().toString().trim();
+        String nuevoEmail = binding.tvEmailPerf.getText().toString().trim();
+        String nuevaContrasena = binding.tvContraPerf.getText().toString().trim();
 
-        String nuevoNombre = binding.tvNamePer.getText().toString();
-        String nuevoApellido = binding.tvApellidoPer.getText().toString();
-        Log.d("PerfilFragment", "nuevoNombre: " + nuevoNombre + ", nuevoApellido: " + nuevoApellido);
+        if (nuevoNombre.isEmpty() || nuevoApellido.isEmpty() || nuevoCelularStr.isEmpty() ||
+                nuevoDniStr.isEmpty() || nuevaDireccion.isEmpty() || nuevoEmail.isEmpty() || nuevaContrasena.isEmpty()) {
+            mostrarMensaje("Todos los campos son obligatorios");
+            return;
+        }
 
-        int nuevoCelular = Integer.parseInt(binding.tvCelularPerf.getText().toString()) ;
-        int nuevoDni = Integer.parseInt(binding.tvDniPerf.getText().toString());
-        String nuevaDireccion = binding.tvDireccionPerf.getText().toString();
-        String nuevoEmail = binding.tvEmailPerf.getText().toString();
-        String nuevaContrasena = binding.tvContraPerf.getText().toString();
+        int nuevoCelular;
+        int nuevoDni;
+        try {
+            nuevoCelular = Integer.parseInt(nuevoCelularStr);
+            nuevoDni = Integer.parseInt(nuevoDniStr);
+        } catch (NumberFormatException e) {
+            mostrarMensaje("Formato inválido para celular o DNI");
+            return;
+        }
 
         usuarioViewModel.obtenerUsuario().observe(getViewLifecycleOwner(), new Observer<Usuario>() {
             @Override
@@ -115,12 +129,15 @@ public class PerfilFragment extends Fragment implements View.OnClickListener{
                     // Inicia la actualización remota
                     usuarioViewModel.actualizarUsuarioRemoto(usuarioActual);
                     Log.d("PerfilFragment", "Iniciando actualización remota");
+
+                    Snackbar.make(binding.getRoot(), "Perfil actualizado con éxito", Snackbar.LENGTH_LONG).show();
+
                 }
             }
         });
+    }
 
-
-
-
+    private void mostrarMensaje(String mensaje) {
+        Snackbar.make(binding.getRoot(), mensaje, Snackbar.LENGTH_LONG).show();
     }
 }

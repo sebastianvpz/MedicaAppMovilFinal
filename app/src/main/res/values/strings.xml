@@ -48,4 +48,11 @@
     <string name="valEdadMasc">EDAD</string>
     <string name="valMascho">MACHO</string>
     <string name="valHemb">HEMBRA</string>
+    <string name="valFragServ">SERVICIOS</string>
+    <string name="VALMEDFRAG">MEDICOS VETERINARIOS</string>
+    <string name="valTitMascoFrag">MASCOTAS</string>
+    <string name="valTitConsul">CONSULTAS</string>
+    <string name="valTitPerf">PERFIL</string>
+    <string name="valTitResreFrag">RESERVAS</string>
+    <string name="valAgMascFrag">AGREGAR MASCOTA</string>
 </resources>
