@@ -113,28 +113,42 @@ public class PerfilFragment extends Fragment implements View.OnClickListener{
             @Override
             public void onChanged(Usuario usuarioActual) {
                 if (usuarioActual != null) {
-                    // Actualiza los datos del usuario
-                    usuarioActual.setNombre(nuevoNombre);
-                    usuarioActual.setApellido(nuevoApellido);
-                    usuarioActual.setCelular(nuevoCelular);
-                    usuarioActual.setDni(nuevoDni);
-                    usuarioActual.setDireccion(nuevaDireccion);
-                    usuarioActual.setEmail(nuevoEmail);
-                    usuarioActual.setContrasena(nuevaContrasena);
+                    // Compara la información introducida con la información actual
+                    if (esInformacionIgual(usuarioActual, nuevoNombre, nuevoApellido, nuevoCelular, nuevoDni, nuevaDireccion, nuevoEmail, nuevaContrasena)) {
+                        Snackbar.make(binding.getRoot(), "La información es la misma, no se realizaron cambios", Snackbar.LENGTH_LONG).show();
+                    } else {
+                        // Actualiza los datos del usuario
+                        usuarioActual.setNombre(nuevoNombre);
+                        usuarioActual.setApellido(nuevoApellido);
+                        usuarioActual.setCelular(nuevoCelular);
+                        usuarioActual.setDni(nuevoDni);
+                        usuarioActual.setDireccion(nuevaDireccion);
+                        usuarioActual.setEmail(nuevoEmail);
+                        usuarioActual.setContrasena(nuevaContrasena);
 
-                    // Actualiza localmente
-                    usuarioViewModel.actualizarUsuario(usuarioActual);
-                    Log.d("PerfilFragment", "Usuario actualizado localmente");
+                        // Actualiza localmente
+                        usuarioViewModel.actualizarUsuario(usuarioActual);
+                        Log.d("PerfilFragment", "Usuario actualizado localmente");
 
-                    // Inicia la actualización remota
-                    usuarioViewModel.actualizarUsuarioRemoto(usuarioActual);
-                    Log.d("PerfilFragment", "Iniciando actualización remota");
+                        // Inicia la actualización remota
+                        usuarioViewModel.actualizarUsuarioRemoto(usuarioActual);
+                        Log.d("PerfilFragment", "Iniciando actualización remota");
 
-                    Snackbar.make(binding.getRoot(), "Perfil actualizado con éxito", Snackbar.LENGTH_LONG).show();
-
+                        Snackbar.make(binding.getRoot(), "Perfil actualizado con éxito", Snackbar.LENGTH_LONG).show();
+                    }
                 }
             }
         });
+    }
+
+    private boolean esInformacionIgual(Usuario usuario, String nombre, String apellido, int celular, int dni, String direccion, String email, String contrasena) {
+        return usuario.getNombre().equals(nombre)
+                && usuario.getApellido().equals(apellido)
+                && usuario.getCelular() == celular
+                && usuario.getDni() == dni
+                && usuario.getDireccion().equals(direccion)
+                && usuario.getEmail().equals(email)
+                && usuario.getContrasena().equals(contrasena);
     }
 
     private void mostrarMensaje(String mensaje) {
